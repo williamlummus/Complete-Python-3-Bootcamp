@@ -1,0 +1,197 @@
+/**
+     * This method will solve the maze.
+     */
+    public void myProgram()
+    {
+        while (true)
+        {
+            if (this.seesFlower(HERE))
+            {
+                this.pick();
+            }
+            else if (this.seesFlower(AHEAD))
+            {
+                this.hop();
+                this.pick();
+            }
+            else if (this.seesFlower(RIGHT))
+            {
+                this.turn(RIGHT);
+                this.hop();
+                this.pick();
+                this.myProgram();
+            }
+            this.keepGoing();
+            this.takeAltRoute();
+            this.makeTurn();
+            this.avoidNet();
+            this.dontGetStuck();
+        }
+    }
+    /**
+     * This method will have the
+     * jeroo pick flowers and 
+     * disable nets.
+     */
+    public void avoidNet()
+    {
+        if (seesNet(AHEAD) && this.hasFlower())
+        {
+            this.toss();
+            this.myProgram();
+        }
+    }
+    /**
+     * This method tells the jeroo
+     * how to avoid going into the 
+     * water.
+     */
+    public void makeTurn()
+    {
+        if (this.seesWater(AHEAD))
+        {
+            if (this.seesWater(RIGHT) && !this.seesWater(LEFT))
+            {
+                this.turn(LEFT);
+            }
+            else if (this.seesWater(LEFT) && !this.seesWater(RIGHT))
+            {
+                this.turn(RIGHT);
+            }
+            else if (this.seesWater(LEFT) && this.seesWater(AHEAD) && this.seesWater(RIGHT))
+            {
+                this.turn(RIGHT);
+                this.turn(RIGHT);
+            }
+            else
+            {
+                this.turn(LEFT);
+            }
+        }
+    }
+    /**
+     * desc
+     */
+    public void keepGoing()
+    {
+        while (true && this.isClear(AHEAD))
+        {
+            this.hop();
+            this.makeTurn();
+        }
+        if (this.seesFlower(AHEAD))
+        {
+            this.hop();
+            this.pick();
+            this.myProgram();
+        }
+    }
+    /**
+     * desc
+     */
+    public void dontGetStuck()
+    {
+        if (true) 
+        {
+            if (!this.isFacing(SOUTH) && this.seesWater(LEFT) 
+                && this.isClear(RIGHT) || this.seesFlower(RIGHT) 
+                || this.seesNet(RIGHT))
+            {
+                this.turn(RIGHT);
+            }
+            else if (!this.isFacing(WEST) && !this.isFacing(SOUTH) 
+                && !this.isFacing(EAST) && this.seesWater(RIGHT) 
+                && this.isClear(LEFT) || this.seesFlower(LEFT) 
+                || this.seesNet(LEFT))
+            {
+                this.turn(LEFT);
+            }
+            else if (this.isClear(LEFT) && this.isClear(RIGHT) 
+                && !this.isClear(AHEAD) && !this.isFacing(EAST) 
+                && !this.isFacing(NORTH))
+            {
+                this.turn(RIGHT);
+            }
+            else if (this.isClear(LEFT) && this.isClear(AHEAD) 
+                && this.isFacing(EAST) && !this.isClear(RIGHT))
+            {
+                this.hop();
+            }
+            else if (this.isClear(LEFT) && this.isClear(AHEAD) 
+                && this.isFacing(SOUTH) && this.seesWater(RIGHT))
+            {
+                this.hop();
+            }      
+            else if (this.isClear(LEFT) && this.isClear(AHEAD) 
+                && this.isFacing(NORTH) && this.seesWater(RIGHT))
+            {
+                this.hop();
+            }  
+            else if (this.isClear(LEFT) && this.isClear(RIGHT) 
+                && !this.isClear(AHEAD) && this.isFacing(EAST))
+            {
+                this.turn(LEFT);
+            }       
+            else if (this.isClear(LEFT) && this.isClear(RIGHT) 
+                && !this.isClear(AHEAD) && !this.isFacing(EAST) 
+                && this.isFacing(NORTH))
+            {
+                this.turn(RIGHT);
+            }
+            else if (this.isClear(LEFT) && !this.isClear(RIGHT) 
+                && this.isClear(AHEAD) && !this.isFacing(EAST) 
+                && this.isFacing(WEST))
+            {
+                this.hop();
+            }
+            else if (this.isClear(LEFT) && this.isClear(AHEAD) 
+                && this.isFacing(EAST) && this.isClear(RIGHT))
+            {
+                this.turn(RIGHT);
+            }
+            else if (this.isClear(LEFT) && this.isClear(AHEAD) 
+                && this.isFacing(NORTH) && this.isClear(RIGHT))
+            {
+                this.turn(RIGHT);
+            }
+            else if (this.isClear(LEFT) && this.isClear(AHEAD) 
+                && this.isFacing(WEST) && this.isClear(RIGHT))
+            {
+                this.turn(RIGHT);
+            }
+            else if (this.isClear(LEFT) && this.isClear(AHEAD) 
+                && this.isFacing(SOUTH) && this.isClear(RIGHT))
+            {
+                this.turn(RIGHT);
+            }
+            this.myProgram();
+        }
+    }
+    public void takeAltRoute()
+    {
+        if (this.seesWater(AHEAD))
+        {
+            if (this.seesWater(LEFT) && !this.seesWater(RIGHT))
+            {
+                this.turn(RIGHT);
+            }
+            else if (this.seesWater(RIGHT) && !this.seesWater(LEFT))
+            {
+                this.turn(LEFT);
+            }
+            else if (this.seesWater(LEFT) && this.seesWater(RIGHT) 
+                && this.seesWater(AHEAD))
+            {
+                this.turn(LEFT);
+                this.turn(LEFT);
+            }
+            else
+            {
+                this.turn(LEFT);
+            }
+            this.myProgram();
+            
+        }
+
+    }
+}
