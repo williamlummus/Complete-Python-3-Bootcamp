@@ -1,0 +1,119 @@
+/**
+     * This method will solve the maze.
+     */
+    public void myProgram()
+    {
+        while (true)
+        {
+            if (this.seesFlower(HERE))
+            {
+                this.pick();
+            }
+            else if (this.seesFlower(AHEAD))
+            {
+                this.hop();
+                this.pick();
+            }
+            else if (this.seesFlower(RIGHT))
+            {
+                this.turn(RIGHT);
+                this.hop();
+                this.pick();
+                this.myProgram();
+            }
+            this.keepGoing();
+            this.takeAltRoute();
+            this.makeTurn();
+            this.avoidNet();
+        }
+    }
+    /**
+     * This method will have the
+     * jeroo pick flowers and 
+     * disable nets.
+     */
+    public void avoidNet()
+    {
+        if (seesNet(AHEAD) && this.hasFlower())
+        {
+            this.toss();
+            this.myProgram();
+        }
+    }
+    /**
+     * This method tells the jeroo
+     * how to avoid going into the 
+     * water while turning around.
+     */
+    public void makeTurn()
+    {
+        if (this.seesWater(AHEAD))
+        {
+            if (this.seesWater(RIGHT) && !this.seesWater(LEFT))
+            {
+                this.turn(LEFT);
+            }
+            else if (this.seesWater(LEFT) && !this.seesWater(RIGHT))
+            {
+                this.turn(RIGHT);
+            }
+            else if (this.seesWater(LEFT) && this.seesWater(AHEAD) && this.seesWater(RIGHT))
+            {
+                this.turn(RIGHT);
+                this.turn(RIGHT);
+            }
+            else
+            {
+                this.turn(LEFT);
+            }
+        }
+    }
+    /**
+     * This method makes sure
+     * the jeroo harvests flowers.
+     */
+    public void keepGoing()
+    {
+        while (this.isClear(AHEAD) && true)
+        {
+            this.hop();
+            this.makeTurn();
+        }
+        if (this.seesFlower(AHEAD))
+        {
+            this.hop();
+            this.pick();
+            this.myProgram();
+        }
+    }
+    /**
+     * This method attempts to have
+     * the jeroo take every route. It 
+     * doesn't work though.
+     */
+    public void takeAltRoute()
+    {
+        if (this.seesWater(AHEAD))
+        {
+            if (this.seesWater(LEFT) && !this.seesWater(RIGHT))
+            {
+                this.turn(RIGHT);
+            }
+            else if (this.seesWater(RIGHT) && !this.seesWater(LEFT))
+            {
+                this.turn(LEFT);
+            }
+            else if (this.seesWater(LEFT) && this.seesWater(RIGHT) 
+                && this.seesWater(AHEAD))
+            {
+                this.turn(LEFT);
+                this.turn(LEFT);
+            }
+            else
+            {
+                this.turn(LEFT);
+            }
+            this.myProgram();
+        }
+    }
+}
